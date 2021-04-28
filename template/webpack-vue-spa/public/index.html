@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf8" version="1" />
+    <title>Nihao Mobile</title>
+    <meta name="description" content="buy sim" />
+    <meta name="Keywords" content="sim,phone,card,ICCID" />
+    <!-- <link rel="dns-prefetch" href="//res.yodafone.cn"/> -->
+    <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <% if (process.env.NODE_ENV === 'DEV') { %>
+    <!-- 加载开发环境专属脚本 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.common.dev.js"></script>
+    <% } else { %>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
+    <% } %> <% if (process.env.NODE_ENV === 'TEST') { %>
+    <!-- 加载测试环境专属脚本 -->
+    <% } %> <% if (process.env.NODE_ENV === 'UAT') { %>
+    <!-- 加载UAT环境专属脚本 -->
+    <% } %> <% if (process.env.NODE_ENV === 'PROD') { %>
+    <!-- 加载生产环境专属脚本 -->
+    <% } %>
+  </body>
+</html>

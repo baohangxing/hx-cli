@@ -1,0 +1,37 @@
+{
+    "name": "hx_cli",
+    "version": "0.0.1",
+    "description": "A command-line interface tool for init website project",
+    "bin": {
+        "begin": "bin/hx-cli"
+    },
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/baohangxing/hx_cli.git"
+    },
+    "keywords": [
+        "tool",
+        "command-line-interface",
+        "cli"
+    ],
+    "author": "baohangxing",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/baohangxing/hx_cli/issues"
+    },
+    "homepage": "https://github.com/baohangxing/hx_cli#readme",
+    "dependencies": {
+        "chalk": "^4.1.1",
+        "commander": "^7.2.0",
+        "download-git-repo": "^3.0.2",
+        "fs-extra": "^9.1.0",
+        "inquirer": "^8.0.0",
+        "mem-fs": "^2.0.0",
+        "mem-fs-editor": "^8.1.2",
+        "ora": "^5.4.0"
+    }
+}
