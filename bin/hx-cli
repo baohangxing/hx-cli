@@ -9,8 +9,9 @@ function getRootPath() {
 const packageInfo = require(path.join(getRootPath(), 'package.json'));
 
 program
-    .version(packageInfo.version)
+    .version(packageInfo.version, '-v, --version, -V')
     .description(packageInfo.description)
     .usage('<command> [options]')
-    .command('init [name]', 'init a project')
+    .command('init', 'init a project')
+    .alias('i')
     .parse(process.argv);

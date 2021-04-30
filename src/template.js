@@ -1,19 +1,21 @@
 const inquirer = require('inquirer');
 const fse = require('fs-extra');
-const download = require('download-git-repo');
-const { TEMPLATE_GIT_REPO, INJECT_FILES } = require('./constants');
-const chalk = require('chalk');
 const ora = require('ora');
-const path = require('path');
+const { ONLINE_PROJECT_LIST } = require('./constants');
 const memFs = require('mem-fs');
 const editor = require('mem-fs-editor');
-const { getDirFileName } = require('./utils');
-const { exec } = require('child_process');
+const utils = require('./utils');
+const path = require('path');
+const OnlineProject = require('./onlineProject');
+const LocalProject = require('./localProject');
+
+const ONLINE_PROJECT_TIP = ' (download from online)';
 
 class Tmpelate {
     constructor(options) {
         this.config = Object.assign(
             {
+                projectType: '',
                 projectName: '',
                 description: '',
             },
@@ -30,7 +32,30 @@ class Tmpelate {
     }
     inquire() {
         const prompts = [];
-        const { projectName, description } = this.config;
+        const { projectType, projectName, description } = this.config;
+        let templatePath = path.resolve(__dirname, './../template/');
+
+        let onlineList = ONLINE_PROJECT_LIST.map(
+            x => x.NAME + ONLINE_PROJECT_TIP
+        );
+
+        let templateList = [
+            ...utils.getDirFileName(templatePath),
+            ...onlineList,
+        ];
+
+        if (
+            typeof projectType !== 'string' ||
+            templateList.indexOf(projectType) === -1
+        ) {
+            prompts.push({
+                type: 'list',
+                name: 'projectType',
+                message: '请选择项目类型：',
+                choices: templateList,
+            });
+        }
+
         if (typeof projectName !== 'string') {
             prompts.push({
                 type: 'input',
@@ -72,6 +97,31 @@ class Tmpelate {
         }
 
         return inquirer.prompt(prompts);
+    }
+    generate() {
+        if (this.config.projectType.indexOf(ONLINE_PROJECT_TIP) !== -1) {
+            let downloadUrl = '';
+            for (let item of ONLINE_PROJECT_LIST) {
+                if (
+                    this.config.projectType ===
+                    item.NAME + ONLINE_PROJECT_TIP
+                ) {
+                    downloadUrl = item.LINK;
+                    break;
+                }
+            }
+            new OnlineProject({
+                downloadUrl: downloadUrl,
+                projectName: this.config.projectName,
+                description: this.config.description,
+            });
+        } else {
+            new LocalProject({
+                projectType: this.config.projectType,
+                projectName: this.config.projectName,
+                description: this.config.description,
+            });
+        }
     }
 }
 
